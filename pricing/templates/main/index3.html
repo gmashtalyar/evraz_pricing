@@ -7,8 +7,280 @@
 
 
 
-<link rel="stylesheet" type="text/css" href="{% static 'some_styles.css' %}">
+<!--<link rel="stylesheet" type="text/css" href="{% static 'some_styles.css' %}">-->
+<style>
 
+.hidden-radio {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.calc__radio-label-selected {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+  background: linear-gradient(94.43deg, #722082 0, #5a004b 100%);
+  border: 1px solid #e0e0e0;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 32px;
+  cursor:pointer;
+  color: #ffffff; /* Change text color for highlighted label */
+}
+
+.calc__radio-label {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 32px;
+  cursor:pointer;
+  color: #000000; /* Change text color for unhighlighted label */
+}
+
+.calc__col-body {
+    display: flex;
+    flex-direction:column
+}
+
+.calc__radio {
+    display: grid;
+    align-items: center;
+    grid-column-gap: 20px;
+    grid-row-gap:15px
+}
+
+.calc__radio--5 {
+    grid-template-columns:1fr 1fr
+}
+
+.calc__col {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    grid-row-gap:20px
+}
+
+.calc__col-head {
+    position: relative;
+    padding: 0 0 0 24px;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 14px;
+    text-transform:uppercase
+}
+
+.calc__line-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-column-gap: 45px;
+    grid-row-gap:30px
+}
+
+@media (min-width: 768px) {
+    .calc__line-grid--2, .calc__line-grid--3 {
+        grid-template-columns:1fr 1fr
+    }
+}
+
+@media (min-width: 992px) {
+    .calc__line-grid--3 {
+        grid-template-columns:1fr 1fr 1fr
+    }
+}
+
+.calc__line {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-row-gap: 25px;
+    padding:25px 15px
+}
+
+@media (min-width: 768px) {
+    .calc__line {
+        padding:30px
+    }
+}
+
+@media (min-width: 992px) {
+    .calc__line {
+        padding:30px 50px
+    }
+}
+.calc__line-title {
+    font-size: 20px;
+    line-height:23px
+}
+
+input.calc__range-value {
+    width: 100%;
+    margin: 0;
+    padding: 21px 15px;
+    outline: none;
+    box-shadow: none;
+    border: 1px solid #e0e0e0;
+    font-size: 14px;
+    line-height: 16px;
+    transition: all .3s;
+}
+
+.calc__select-current span {
+    line-height: 1.1
+}
+
+.calc__col-body-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 60px;
+    align-items: center;
+    grid-column-gap:10px
+}
+
+.calc__range-wrapper input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 10px; /* Adjust the height as needed */
+    background-color: #5a004b; /* Background color of the range track */
+    outline: none;
+    border-radius: 5px; /* Rounded corners */
+}
+
+/* Style for the thumb (circle) */
+.calc__range-wrapper input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px; /* Diameter of the thumb */
+    height: 20px; /* Diameter of the thumb */
+    background-color: #ffffff; /* Center color of the thumb */
+    border: 2px solid #5a004b; /* Border color of the thumb */
+    border-radius: 50%; /* Rounded shape to make it a circle */
+    cursor: pointer;
+    margin-top: -5px; /* Adjust the position vertically to align with the track */
+}
+
+/* Hide the default outline in Firefox */
+.calc__range-wrapper input[type="range"]::-moz-focus-inner {
+    border: 0;
+    outline: none;
+}
+
+.calc__radio-label, .calc__select, .calc__select-current {
+    position: relative;
+    transition:all .3s
+}
+
+.calc__select.opened {
+    box-shadow:0 2px 20px rgba(28, 28, 28, .15)
+}
+
+.calc__select-current {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 60px;
+    padding: 5px 15px;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    cursor:pointer
+}
+
+.calc__select-current:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 7px;
+    width: 16px;
+    height: 16px;
+    background: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTggMC43OTY4NzVMNCA2LjM5Njg3SDEyTDggMC43OTY4NzVaTTggMTUuMTk2OUwxMiA5LjU5Njg3SDRMOCAxNS4xOTY5WiIgZmlsbD0iIzJDMkMyQyIvPgo8L3N2Zz4K) no-repeat center;
+    background-size: contain;
+    opacity: .5;
+    transform: translateY(-50%);
+    transition:all .3s
+}
+
+.calc__select-current:hover, .opened .calc__select-current {
+    border-color:#722082
+}
+
+.calc__select-current:hover:before, .opened .calc__select-current:before {
+    opacity:1
+}
+
+.calc__select-current--small {
+    padding:16px 10px 16px 12px
+}
+
+.calc__select-current--small:before {
+    right:4px
+}
+
+.calc__select-current span {
+    pointer-events:none
+}
+
+.calc__select-list, .calc__select-list-item:before {
+    position: absolute;
+    left: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition:all .3s
+}
+
+.calc__select-list {
+    top: calc(100% - 1px);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    list-style: none;
+    background: #fff;
+    border: 1px solid #722082;
+    box-shadow: 0 2px 20px rgba(28, 28, 28, .15);
+    transform: translateY(-30px);
+    z-index:1
+}
+
+.opened .calc__select-list {
+    opacity: 1;
+    visibility: visible;
+    transform:none
+}
+
+.calc__select-list-item {
+    position: relative;
+    padding: 15px 20px;
+    cursor:pointer
+}
+
+.calc__select-list-item:before {
+    content: "";
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(94.43deg, #722082 0, #5a004b 100%);
+    pointer-events:none
+}
+
+.calc__select-list-item.selected, .calc__select-list-item:hover {
+    color:#fff
+}
+
+.calc__select-list-item.selected:before, .calc__select-list-item:hover:before {
+    opacity: 1;
+    visibility:visible
+}
+
+.calc__select-list-item span {
+    position:relative
+}
+</style>
 
 {% verbatim %}
 <div id="app">
