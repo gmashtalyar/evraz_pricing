@@ -1,0 +1,31 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Evraz{% endblock %}
+
+{% block content %}
+{% load humanize %}
+{% load static %}
+
+
+<table class="table table-striped table-sm">
+        <tr>
+            <th style="width:35%">Документ</th>
+            <th style="padding-right:5px">Дата возникновения</th>
+            <th style="padding-right:5px">Объект</th>
+            <th style="padding-right:5px">Договор</th>
+            <th style="padding-right:5px">Долг</th>
+        </tr>
+    {% for smth in accounts_payables %}
+        <tr>
+            <td>{{ smth.document }}</td>
+            <td style="padding-right:5px">{{ smth.date }}</td>
+            <td style="padding-right:5px">{{ smth.sklad }}</td>
+            <td style="padding-right:5px">{{ smth.contract }}</td>
+            <td style="padding-right:5px">{{ smth.value | intcomma}}</td>
+        </tr>
+    {% endfor %}
+</table>
+
+
+
+{% endblock %}

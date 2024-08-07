@@ -1,0 +1,156 @@
+.calc__col-head {
+    position: relative;
+    padding: 0 0 0 24px;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 14px;
+    text-transform: uppercase;
+    vertical-align: middle;
+    align-items: center;
+    display: flex;
+    gap: 20px;
+}
+
+.sticky-header {
+    background: #FFF;
+    box-shadow: 0px 8px 15px 0px rgba(0, 0, 0, 0.13);
+    display: flex;
+    width: auto;
+    gap: 0 20px;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.calc__body {
+    padding-top: 10px;
+}
+
+.calc__section:before {
+    display: none;
+}
+
+.a-addon {
+    color: #585B5E;
+    margin-bottom: 10px;
+}
+
+.a-addon img {
+    max-width: 14px;
+    height: 14px;
+    margin-right: 6px;
+
+}
+
+input.calc__range-value {
+    width: 100%;
+    margin: 0;
+    padding: 21px 15px;
+    outline: none;
+    box-shadow: none;
+    border: 1px solid #e0e0e0;
+    font-size: 14px;
+    line-height: 16px;
+    transition: all .3s;
+}
+
+.calc input[type=number] {
+    width: 80px;
+}
+
+.addons-1 .calc__line-grid {
+    margin: 20px 0 0;
+}
+
+.calc__page {
+    padding: 10px 0;
+}
+
+.calc__section {
+    position: relative;
+    padding: 10px 0 50px;
+}
+
+.calc__page-wrapper {
+    grid-row-gap: 35px;
+}
+
+.calc__title {
+    padding: 0 0 23px;
+}
+
+.calc__select-current span {
+    line-height: 1.1
+}
+
+.sticky-header div {
+    display: flex;
+    vertical-align: middle;
+    align-items: center;
+}
+
+.sticky-header div img {
+    padding: 0 4px;
+}
+
+.calc__col-body-wrapper {
+    grid-template-columns: 1fr 60px 30px;
+}
+
+.sticky-header div span {
+    display: block;
+    white-space: nowrap;
+}
+.hidden_add {display: none!important;}
+@media (max-width: 601px) {
+    .sticky-header {
+        background: #FFF;
+        box-shadow: 0px 8px 15px 0px rgba(0, 0, 0, 0.13);
+        display: flex;
+        width: auto;
+        gap: 0 20px;
+        align-items: center;
+        margin-top: 50px;
+        max-width: 100%;
+        overflow-y: scroll;
+        position: fixed;
+        top: 5px;
+        left: 0;
+        z-index: 999;
+    }
+
+    .calc__page {
+        padding-top: 65px;
+    }
+
+    .sticky-header div {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        vertical-align: middle;
+        align-items: center;
+    }
+
+    .sticky-header div span {
+        display: block;
+        white-space: nowrap;
+    }
+
+    .sticky-header div img {
+        padding: 0 4px;
+    }
+}
+
+@media (min-width: 968px) {
+    .sticky-header {
+        position: sticky;
+        top: 0;
+        z-index: 999;
+        overflow-x: scroll;
+    }
+}
+
+.flex-item {
+    display: inline-flex;
+    width: 100%;
+    gap: 5px;
+    line-height: 1;
+}

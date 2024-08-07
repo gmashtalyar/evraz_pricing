@@ -1,0 +1,278 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Evraz Steel Box{% endblock %}
+
+{% block content %}
+{% load static %}
+
+
+
+<link rel="stylesheet" type="text/css" href="{% static 'some_styles.css' %}">
+
+
+{% verbatim %}
+<div id="app">
+
+<br><br><br><br>
+
+
+<div class="sticky-top" style="background-color: #fafafc; padding:5px;">
+    <h1 style="font-size: 50px;"> ЦЕНА {{ price | intcomma }}</h1>
+</div>
+  <br><br>
+
+
+<div class="calc__line">
+<div class="calc__line-title">Район строительства (Подробнее о зонах)</div>
+<div class="calc__line-grid calc__line-grid--2">
+<div class="calc__col">
+  <div class="calc__col-head"><label for="snow">Снеговой район</label></div>
+  <div class="calc__col-body">
+  <div class="calc__radio calc__radio--5">
+    <input type="radio" id="snow-I" name="snow" value="I" v-model="snow" @change="updatePrice" class="hidden-radio">
+    <label :class="{'calc__radio-label-selected': snow === 'I', 'calc__radio-label': snow !== 'I'}" for="snow-I">I</label>
+
+    <input type="radio" id="snow-II" name="snow" value="II" v-model="snow" @change="updatePrice" class="hidden-radio">
+    <label :class="{'calc__radio-label-selected': snow === 'II', 'calc__radio-label': snow !== 'II'}" for="snow-II">II</label>
+
+    <input type="radio" id="snow-III" name="snow" value="III" v-model="snow" @change="updatePrice" class="hidden-radio">
+    <label :class="{'calc__radio-label-selected': snow === 'III', 'calc__radio-label': snow !== 'III'}" for="snow-III">III</label>
+  </div>
+  </div>
+</div>
+
+
+<div class="calc__col">
+  <div class="calc__col-head"><label for="wind">ВЕТРОВОЙ РАЙОН</label></div>
+  <div class="calc__col-body">
+  <div class="calc__radio calc__radio--5">
+
+    <input type="radio" id="wind-I" name="wind" value="I" v-model="wind" @change="updatePrice" class="hidden-radio">
+    <label :class="{'calc__radio-label-selected': wind === 'I', 'calc__radio-label': wind !== 'I'}" for="wind-I">I</label>
+
+    <input type="radio" id="wind-II" name="wind" value="II" v-model="wind" @change="updatePrice" class="hidden-radio">
+    <label :class="{'calc__radio-label-selected': wind === 'II', 'calc__radio-label': wind !== 'II'}" for="wind-II">II</label>
+
+    <input type="radio" id="wind-III" name="wind" value="III" v-model="wind" @change="updatePrice" class="hidden-radio">
+    <label :class="{'calc__radio-label-selected': wind === 'III', 'calc__radio-label': wind !== 'III'}" for="wind-III">III</label>
+
+  </div>
+  </div>
+</div>
+</div>
+</div>
+  <br><br>
+
+<div class="calc__line">
+  <div class="calc__line-title">Параментры здания</div>
+  <div class="calc__line-title">Размеры здания</div>
+<div class="calc__line-grid calc__line-grid--3">
+
+  <div class="calc_col">
+    <div class="calc__col-head">ШИРИНА ЗДАНИЯ, М</div>
+    <div class="calc__col-body">
+      <div class="calc__col-body-wrapper">
+        <div class="calc__range-wrapper">
+          <input id="width" type="range" min="12" max="24" v-model="width" @change="updatePrice">
+        </div>
+        <div class="calc__select">
+          <span>{{ width }}</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="calc_col">
+    <div class="calc__col-head">ДЛИНА ЗДАНИЯ, М</div>
+    <div class="calc__col-body">
+      <div class="calc__col-body-wrapper">
+
+        <div class="calc__range-wrapper">
+          <input id="length" type="range" min="18" max="90" v-model="length" @change="updatePrice">
+        </div>
+        <div class="calc__select">
+          <span>{{ length }}</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="calc_col">
+    <div class="calc__col-head">ВЫСОТА ДО НИЗА НЕСУЩИХ, М</div>
+    <div class="calc__col-body">
+      <div class="calc__col-body-wrapper">
+        <div class="calc__range-wrapper">
+        <input id="height" type="range" min="4" max="12" v-model="height" @change="updatePrice">
+        </div>
+        <div class="calc__select">
+          <span>{{ height }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+  <br><br>
+
+
+<div class="calc__line">
+<div class="calc__line-title">Стены и кровля</div>
+<div class="calc__line-grid calc__line-grid--2">
+    <div class="calc_col">
+    <div class="calc__col-head">ОГРАЖДАЮЩИЕ КОНСТРУКЦИИ СТЕН</div>
+      <div class="calc__col-body">
+        <div class="calc__select">
+          <select id="wall_panels" v-model="wall_panels" @change="updatePrice">
+            <option value="СПС 120х1000">СПС 120х1000</option>
+            <option value="СПС 100х1000">СПС 100х1000</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="calc_col">
+    <div class="calc__col-head">ОГРАЖДАЮЩИЕ КОНСТРУКЦИИ КРОВЛИ</div>
+      <div class="calc__col-body">
+        <div class="calc__select">
+
+        <select id="roof_panels" v-model="roof_panels" @change="updatePrice">
+          <option value="СПК 150х1000">СПК 150х1000</option>
+          <option value="СПК 120х1000">СПК 120х1000</option>
+        </select>
+        </div>
+        </div>
+      </div>
+</div>
+</div>
+
+  <br><br>
+
+
+  <div>
+  <label for="frame_type">Name:</label>
+  <select id="name" v-model="name" @change="updatePrice">
+    <option value="Оптимум Р41">Оптимум Р41</option>
+    <option value="Оптимум Р5">Оптимум Р5</option>
+    <option value="Каркас Р1">Каркас Р1</option>
+    <option value="Каркас Р2">Каркас Р2</option>
+    <option value="Каркас Р41">Каркас Р41</option>
+    <option value="Каркас Р5">Каркас Р5</option>
+    <option value="Профессионал">Профессионал</option>
+    <option value="Профессионал +">Профессионал +</option>
+    <option value="Эконом Р41">Эконом Р41</option>
+    <option value="Эконом 5">Эконом 5</option>
+  </select>
+  </div>
+
+
+
+
+  <div>
+  <label for="frame_type">Frame Type:</label>
+  <select id="frame_type" v-model="frame_type" @change="updatePrice">
+    <option value="Р1">Р1</option>
+    <option value="Р2">Р2</option>
+    <option value="Р41">Р41</option>
+    <option value="Р5">Р5</option>
+  </select>
+  </div>
+
+  <div>
+  <label for="roof_type">Roof Type:</label>
+  <select id="roof_type" v-model="roof_type" @change="updatePrice">
+    <option value="СП">СП</option>
+    <option value="Без покрытия кровли">Без покрытия кровли</option>
+    <option value="Профлист">Профлист</option>
+    <option value="Мембранная">Мембранная</option>
+  </select>
+  </div>
+
+  <div>
+  <label for="wall_type">Wall Type:</label>
+  <select id="wall_type" v-model="wall_type" @change="updatePrice">
+    <option value="СП">СП</option>
+    <option value="Без покрытия стен">Без покрытия стен</option>
+    <option value="Профлист">Профлист</option>
+  </select>
+  </div>
+
+  <div>
+  <label for="membrane">Wall Type:</label>
+  <select id="membrane" v-model="membrane" @change="updatePrice">
+    <option value="nan">nan</option>
+    <option value="Мембранная-150">Мембранная-150</option>
+  </select>
+  </div>
+
+
+
+
+
+
+  <br><br><br><br>
+
+</div>
+
+<script>
+new Vue({
+  el: '#app',
+  data: {
+    name: 'Оптимум Р41',
+    width: 12,
+    length: 18,
+    height: 4,
+    price: 4256168,
+    frame_type: 'Р41',
+    roof_type: 'СП',
+    wall_type: 'СП',
+    roof_panels: 'СПК 150х1000',
+    wall_panels: 'СПС 120х1000',
+    membrane: 'nan',
+    snow: 'I',
+    wind: 'I'
+  },
+  methods: {
+    updatePrice: function() {
+    const startTime = performance.now();
+      axios.get('/update-price3/', {
+        params: {
+          name: this.name,
+          width: this.width,
+          length: this.length,
+          height: this.height,
+          frame_type: this.frame_type,
+          roof_type: this.roof_type,
+          wall_type: this.wall_type,
+          roof_panels: this.roof_panels,
+          wall_panels: this.wall_panels,
+          membrane: this.membrane,
+          snow: this.snow,
+          wind: this.wind
+        }
+      })
+      .then(response => {
+        const endTime = performance.now();
+        const executionTimeMs = endTime - startTime;
+        const executionTimeSec = executionTimeMs / 1000; // Convert milliseconds to seconds
+
+        console.log('Time taken for update_price:', executionTimeSec, 'seconds');
+
+        this.price = response.data.price;
+        console.log('Updated price:', this.price);
+      })
+      .catch(error => {
+        console.error('Error updating price:', error);
+      });
+    }
+  }
+});
+</script>
+
+{% endverbatim %}
+
+{% endblock %}

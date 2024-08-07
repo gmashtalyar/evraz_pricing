@@ -1,0 +1,74 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Evraz Steel Box{% endblock %}
+
+{% block content %}
+{% load static %}
+
+
+
+{% verbatim %}
+<div id="app">
+  <div>
+    <label for="width">Width:</label>
+    <input id="width" type="range" min="12" max="24" v-model="width" @change="updatePrice">
+    <span>{{ width }}</span>
+  </div>
+
+  <div>
+    <label for="length">Length:</label>
+    <input id="length" type="range" min="30" max="90" v-model="length" @change="updatePrice">
+    <span>{{ length }}</span>
+  </div>
+
+  <div>
+    <label for="height">Height:</label>
+    <input id="height" type="range" min="4" max="12" v-model="height" @change="updatePrice">
+    <span>{{ height }}</span>
+  </div>
+
+  <div>
+    <label for="price">Price:</label>
+    <span>{{ price }}</span>
+  </div>
+</div>
+
+<script>
+new Vue({
+  el: '#app',
+  data: {
+    width: 12,
+    length: 30,
+    height: 4,
+    price: 0
+  },
+  methods: {
+    updatePrice: function() {
+    const startTime = performance.now();
+      axios.get('/update-price2/', {
+        params: {
+          width: this.width,
+          length: this.length,
+          height: this.height
+        }
+      })
+      .then(response => {
+        const endTime = performance.now();
+        const executionTimeMs = endTime - startTime;
+        const executionTimeSec = executionTimeMs / 1000; // Convert milliseconds to seconds
+
+        console.log('Time taken for update_price:', executionTimeSec, 'seconds');
+
+        this.price = response.data.price;
+        console.log('Updated price:', this.price);
+      })
+      .catch(error => {
+        console.error('Error updating price:', error);
+      });
+    }
+  }
+});
+</script>
+{% endverbatim %}
+
+{% endblock %}
