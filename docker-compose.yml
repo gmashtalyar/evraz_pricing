@@ -1,0 +1,29 @@
+version: '3.8'
+
+
+services:
+
+  pricing_app:
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+    networks:
+      - pricing-network
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:1.25.3-alpine
+    ports:
+      - "443:443"
+      - "80:80"
+    networks:
+      - pricing-network
+    depends_on:
+      - pricing_app
+    restart: unless-stopped
+
+
+networks:
+  pricing-network:
+    driver: bridge
